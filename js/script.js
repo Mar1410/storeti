@@ -132,16 +132,17 @@ const productos = [{
 
 ];
 
+// data en lugar de productos.filter // una sola funcion con 3er parametro true o false y 4to Position // biblioteca para func. Menu
 
 function generarOfertas(data) {
-    let ofertas = productos.filter(function(element) {
+    let ofertas = data.filter(function(element) {
         return element.oferta === true
     });
     generadorGridCard(ofertas, "ofertaProductos")
 }
 
 function generarProductos(data) {
-    let soloproductos = productos.filter(function(element) {
+    let soloproductos = data.filter(function(element) {
         return element.oferta === false
     });
     generadorGridCard(soloproductos, "listaProductos")
