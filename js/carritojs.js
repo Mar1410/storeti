@@ -97,7 +97,7 @@ function constTabla(id,nombre, precio,cantidad){
 
 //funciones aumentar/disminuir
 const disminuir = (cantidad) => {
-   if (cantidad !== 0) {
+   if (cantidad !== 1) {
        cantidad --
    } 
   return cantidad;

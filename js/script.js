@@ -89,6 +89,7 @@ const productos = [{
     },
 
 ];
+const carrito = [];
 
 function generarOfertas(data) {
     let ofertas = productos.filter(function(element) {
@@ -131,7 +132,7 @@ function generadorGridCard(data, position) {
 
         let DOMpCantidadNode = document.createElement('p');
          //DOMpCantidadNode.className = 'card-text';
-        DOMpCantidadNode.innerText = "0";
+        DOMpCantidadNode.innerText = "1";
         DOMpCantidadNode.style.padding = '5px';
         DOMpCantidadNode.style.fontWeight = '700';
         DOMpCantidadNode.style.margin = '5px';
@@ -189,7 +190,7 @@ generarProductos(productos);
 
 //funciones aumentar/disminuir
 const disminuir = (cantidad) => {
-    if (cantidad !== 0) {
+    if (cantidad !== 1) {
         cantidad --
     } 
    return cantidad;
@@ -236,16 +237,20 @@ function addcarrito(){
             const cantidad = card.querySelector('div .cantidad p').textContent;
             const id = card.querySelector('a[dataSet]').getAttribute('dataset');
             NuevoPcarrito = new pcarrito(nombre,precio,cantidad,id);
-            SaveNuevoPcarrito()
+            SaveNuevoPcarrito();
+
         });  
-        
      });
 
 }
 addcarrito();
 
+function editarPcarrito(e, cantidad){
+    carrito[e].cantidad = (parseInt(carrito[e].cantidad) + parseInt(cantidad));
+}
+
 //guardar los productos que se valla agregando al carro
-const carrito = [];
+
 function SaveNuevoPcarrito(){
     carrito.push(NuevoPcarrito);
     mostrarBtncarrito();
