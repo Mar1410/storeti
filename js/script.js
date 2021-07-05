@@ -91,6 +91,7 @@ const productos = [{
 ];
 const carrito = [];
 
+
 function generarOfertas(data) {
     let ofertas = productos.filter(function(element) {
         return element.oferta === true
@@ -236,28 +237,44 @@ function addcarrito(){
             const precio = card.querySelector('h3').textContent;
             const cantidad = card.querySelector('div .cantidad p').textContent;
             const id = card.querySelector('a[dataSet]').getAttribute('dataset');
-            NuevoPcarrito = new pcarrito(nombre,precio,cantidad,id);
-            SaveNuevoPcarrito();
-
+            
+            if (carrito.length !== 0) {
+                var pExiste = vExistenciaPcarrito(id);
+                if (pExiste !== false) {
+                    carrito[pExiste].cantidad = (parseInt(carrito[pExiste].cantidad) + parseInt(cantidad));
+                }else{
+                    NuevoPcarrito = new pcarrito(nombre,precio,cantidad,id);
+                    SaveNuevoPcarrito();
+                }
+            }else{
+                NuevoPcarrito = new pcarrito(nombre,precio,cantidad,id);
+                SaveNuevoPcarrito();
+            }
+            card.querySelector('div .cantidad p').innerText = "1";
         });  
      });
 
 }
 addcarrito();
-
-function editarPcarrito(e, cantidad){
-    carrito[e].cantidad = (parseInt(carrito[e].cantidad) + parseInt(cantidad));
+// Funcion Verificar si existe el  Producto en el carrito
+function vExistenciaPcarrito(id){
+    for (let index = 0; index < carrito.length; index++) {
+        if (carrito[index].id === id) {
+            return index;
+        }
+    }
+    return false;
 }
 
 //guardar los productos que se valla agregando al carro
-
 function SaveNuevoPcarrito(){
     carrito.push(NuevoPcarrito);
     mostrarBtncarrito();
 }
-const btncarrito = document.getElementById("btnCarrito");
 
-const mostrarBtncarrito = (e) =>{
+//Mostrar boton carrito
+const btncarrito = document.getElementById("btnCarrito");
+const mostrarBtncarrito = () =>{
    
     if (carrito.length !== 0) {
         btncarrito.style.visibility = 'visible';
@@ -270,3 +287,17 @@ const mostrarBtncarrito = (e) =>{
 btncarrito.addEventListener('click', function guardarDatos(){
     localStorage.setItem('carrito', JSON.stringify(carrito));
 });
+
+//verificar si el carro esta vacio al cargar la pagina
+function verificarConCarrito(){
+    let e = JSON.parse(localStorage.getItem('carrito'));
+    if (e !== null) {
+        if (e.length !== 0) {
+            for (let index = 0; index < e.length; index++) {
+                carrito.push(e[index]);  
+            }
+         mostrarBtncarrito(carrito);
+        }   
+    }
+}
+verificarConCarrito();
