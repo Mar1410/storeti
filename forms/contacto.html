@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store</title>
+    <title>Contacto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -21,9 +19,6 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="mainMenu">
 
                 </ul>
-                <a href="carrito.html" id="btnCarrito"style="margin: 0px 10px;visibility: hidden;" type="button" class="btn btn-primary bg-dark">
-                    Carrito <span class="badge bg-secondary">4</span>
-                </a>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
@@ -31,26 +26,39 @@
             </div>
         </div>
     </nav>
+
     <div class="container">
-        <div class="row" style="margin: 10px;text-align: center;padding: 19px;background: #458;color: white;">
-            <h3>Ofertas</h3>
-        </div>
-        <div class="row" id="ofertaProductos">
+        <br><br><br>
 
-        </div>
-        <div class="row" style="margin: 10px;text-align: center;padding: 19px;background: #458;color: white;">
-            <h3>Productos</h3>
-        </div>
-        <div class="row" id="listaProductos">
+        <div class="row justify-content-center align-items-center">
+            <h1 class="title" style="text-align: center;">Contacto</h1>
+            <br>
+            <div id="error2" class="alert alert-danger alert-dismissible fade show" role="alert">
+                Formulario no valido.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
 
-        </div>
 
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo Electronico</label>
+                <input type="email" class="form-control" id="correo" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" rows="3"></textarea>
+            </div>
+
+            <div class="col-12" style="text-align: center;">
+                <button type="submit" id="enviar" class="btn btn-primary">Enviar</button>
+            </div>
+
+   
+        </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
-    <script src="js/menu.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/contacto.js"></script>
 </body>
-
 </html>

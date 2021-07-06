@@ -125,6 +125,32 @@ function generadorGridCard(data, position) {
         let DOMaNode = document.createElement('a');
         DOMaNode.className = 'btn btn-danger';
         DOMaNode.innerText = 'Añadir al carrito';
+        DOMaNode.setAttribute('dataset', element.id);
+
+        let DOMaAumentarNode = document.createElement('a');
+        DOMaAumentarNode.className = 'btn btn-info btn-sm';
+        DOMaAumentarNode.innerText = '+';
+
+        let DOMpCantidadNode = document.createElement('p');
+         //DOMpCantidadNode.className = 'card-text';
+        DOMpCantidadNode.innerText = "1";
+        DOMpCantidadNode.style.padding = '5px';
+        DOMpCantidadNode.style.fontWeight = '700';
+        DOMpCantidadNode.style.margin = '5px';
+        
+        
+        let DOMaDisminuirNode = document.createElement('a');
+        DOMaDisminuirNode.className = 'btn btn-danger btn-sm';
+        DOMaDisminuirNode.innerText = '-';
+
+        let DOMdivcantidadNode = document.createElement('div');
+        DOMdivcantidadNode.className = 'cantidad';
+        DOMdivcantidadNode.style.display = 'flex';
+        DOMdivcantidadNode.style.alignItems = 'baseline';
+        DOMdivcantidadNode.style.justifyContent = 'center';
+        DOMdivcantidadNode.appendChild(DOMaDisminuirNode);
+        DOMdivcantidadNode.appendChild(DOMpCantidadNode);
+        DOMdivcantidadNode.appendChild(DOMaAumentarNode);
 
         let DOMdivNode = document.createElement('div');
         DOMdivNode.className = 'card-body';
@@ -132,6 +158,7 @@ function generadorGridCard(data, position) {
         DOMdivNode.appendChild(DOMh5Node);
         DOMdivNode.appendChild(DOMpNode);
         DOMdivNode.appendChild(DOMh3Node);
+        DOMdivNode.appendChild(DOMdivcantidadNode);
         DOMdivNode.appendChild(DOMaNode);
 
         let DOMimgNode = document.createElement('img');
@@ -161,3 +188,86 @@ function generadorGridCard(data, position) {
 
 generarOfertas(productos);
 generarProductos(productos);
+
+//funciones aumentar/disminuir
+const disminuir = (cantidad) => {
+    if (cantidad !== 1) {
+        cantidad --
+    } 
+   return cantidad;
+}
+const aumentar = (cantidad) => {
+     cantidad ++
+     return cantidad;
+}
+//capturar el boton que hace click y pintar la cantidad
+ const btncatidad = document.querySelectorAll(".cantidad a");
+btncatidad.forEach((accion) => {
+
+    accion.addEventListener('click', () =>{
+        var divCantidad = accion.parentNode;
+        var cantidad = parseInt(divCantidad.childNodes[1].textContent) ;
+        let pcantidad = divCantidad.childNodes[1];
+        
+        if (accion.classList.contains("btn-danger")) {
+            cantidad = disminuir(cantidad);
+            pcantidad.innerText= cantidad;
+        } else {
+            cantidad = aumentar(cantidad);
+            pcantidad.innerText= cantidad;
+        }            
+    });
+});
+
+//constructor de objeto de productos para el carro
+function pcarrito(nombre,precio,cantidad,id){
+    this.nombre=nombre;
+    this.precio=precio;
+    this.cantidad=cantidad;
+    this.id=id;
+}
+//añadir los productos al carro
+const btnaddcarrito = document.querySelectorAll('a[dataSet]');
+function addcarrito(){
+    
+     btnaddcarrito.forEach(e => {
+        e.addEventListener('click', () =>{
+            var card = e.parentNode;
+            const nombre = card.querySelector('h5').textContent;
+            const precio = card.querySelector('h3').textContent;
+            const cantidad = card.querySelector('div .cantidad p').textContent;
+            const id = card.querySelector('a[dataSet]').getAttribute('dataset');
+            NuevoPcarrito = new pcarrito(nombre,precio,cantidad,id);
+            SaveNuevoPcarrito();
+
+        });  
+     });
+
+}
+addcarrito();
+
+function editarPcarrito(e, cantidad){
+    carrito[e].cantidad = (parseInt(carrito[e].cantidad) + parseInt(cantidad));
+}
+
+//guardar los productos que se valla agregando al carro
+
+function SaveNuevoPcarrito(){
+    carrito.push(NuevoPcarrito);
+    mostrarBtncarrito();
+}
+const btncarrito = document.getElementById("btnCarrito");
+
+const mostrarBtncarrito = (e) =>{
+   
+    if (carrito.length !== 0) {
+        btncarrito.style.visibility = 'visible';
+        let span = btncarrito.childNodes[1];
+        span.textContent = carrito.length;
+    }
+}
+
+//almacenar productos en sesionstorage
+btncarrito.addEventListener('click', function guardarDatos(){
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+});
