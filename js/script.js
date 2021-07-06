@@ -270,3 +270,42 @@ const mostrarBtncarrito = (e) =>{
 btncarrito.addEventListener('click', function guardarDatos(){
     localStorage.setItem('carrito', JSON.stringify(carrito));
 });
+
+
+// buscador
+const btnbuscar = document.getElementById("buscar");
+const condicion = document.getElementById("variable");
+
+
+    const filtrar = ()=>{
+        document.getElementById("ofertaProductos").innerHTML="";
+        var ContOferta = document.getElementById("ofertaProductos")
+
+        const texto = condicion.value.toLowerCase();
+        for(let producto of productos){
+            let nombre = producto.nombre.toLowerCase();
+            if (nombre.indexOf(texto) !== -1 && producto.oferta==true) {
+                let buscaroferta = productos.filter(function(element) {
+                    return element.nombre === nombre
+                });
+               //console.log(buscar)
+               
+               generadorGridCard(buscaroferta, "ofertaProductos")
+            }
+        }
+        if (ContOferta.innerHTML==="") {
+           
+            ContOferta.innerHTML +=`<lo id="Alert">No hay resultados para esta busqueda</lo>`
+            
+        }
+
+        
+    }
+   
+   btnbuscar.addEventListener('click',filtrar);
+    
+
+
+
+
+
